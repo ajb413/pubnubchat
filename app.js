@@ -48,8 +48,8 @@ $(function ()
 		});
 
 		//get message from the past 5 minutes (max 100 messages)
-		var now = new Date().getTime();
-		var fiveMinutesAgo = now - 300000;
+		var now = new Date().getTime() * 10000; //pubnub times are in 10 millionth of seconds
+		var fiveMinutesAgo = now - 10000 * 300000; //5 minutes in milliseconds to pubnub time
 		PUBNUB_demo.history({
 			channel: 'msgappdemo',
 			start: fiveMinutesAgo,
