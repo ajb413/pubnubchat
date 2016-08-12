@@ -48,15 +48,17 @@ $(function ()
 		});
 
 		//get message from the past 5 minutes (max 100 messages)
-		var fiveMinutesAgo = new Date().getTime()-300000;
+		var now = new Date().getTime();
+		var fiveMinutesAgo = now - 300000;
 		PUBNUB_demo.history({
 			channel: 'msgappdemo',
-			end: fiveMinutesAgo,
+			start: fiveMinutesAgo,
+			end: now,
 			callback: writeMessageHistory
 		});
 
 		submitButton.on("click", submitMessage);
-		startButton.keypress(function(e)
+		messageInput.keypress(function(e)
 		{
 			if (e.which === 13)
 			{
