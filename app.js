@@ -86,6 +86,8 @@ $(function ()
 			"text": messageInput.val()
 		}
 
+		messageInput.val("")
+
 		//pubnub publish
 		PUBNUB_demo.publish({
 			channel: 'msgappdemo',
