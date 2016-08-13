@@ -1,26 +1,34 @@
 <!DOCTYPE html>
 <html>
 
-	<head>
-		<title>PubNub Chat</title>
-		<link rel="stylesheet" type="text/css" href="style.css" />
-		<script src="https://cdn.pubnub.com/pubnub-dev.js"></script>
-		<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
-		<script src="app.js"></script>
-	</head>
+  <head>
+    <title>PubNub Chat</title>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <script src="https://cdn.pubnub.com/pubnub-dev.js"></script>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script src="app.js"></script>
+  </head>
 
-	<body>
+  <body>
 
-		<div id="welcome">
-			<p>Enter your username for the chat!</p>
-			<input id="username" type="text" />
-			<input id="start" type="submit" />
-		</div>
+    <div id="welcome" class="modal">
+      <img src="assets/images/pn.png" />
+      <p>ScreenName:</p>
+      <input id="username" type="text" maxlength="50" />
+      <input id="start" type="submit" value="Sign On" />
+    </div>
 
-		<div id="chat">
-			<input id="messageInput" type="text" />
-			<input id="submit" type="submit" />
-		</div>
-	</body>
+    <div id="chat" class="modal">
+      <div id="messageBox"></div>
+      <div class="sendBar">
+        <input id="messageInput" type="text" maxlength="1024" />
+        <input id="submit" type="submit" value="Send" /></div>
+      </div>
+  </body>
+
+  <audio id="signon" src="assets/audio/aol_signon.mp3" type="audio/mpeg" preload="auto" />
+  <audio id="signoff" src="assets/audio/aol_signoff.mp3" type="audio/mpeg" preload="auto" />
+  <audio id="sent" src="assets/audio/aol_sent.mp3" type="audio/mpeg" preload="auto" />
+  <audio id="received" src="assets/audio/aol_received.mp3" type="audio/mpeg" preload="auto" />
 
 </html>

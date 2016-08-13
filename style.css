@@ -1,0 +1,110 @@
+#welcome
+{
+  font-family: arial;
+  font-style: italic;
+  font-weight: bold;
+  color: #443F5E;
+  width: 200px;
+  text-align: center;
+}
+
+.modal
+{
+  border: solid 1px #000000;
+  background-color: #EBE9D8;
+  padding: 20px;
+  margin: auto;
+  -webkit-box-shadow: 2px 4px 8px 2px rgba(0,0,0,0.2);
+  -moz-box-shadow: 2px 4px 8px 2px rgba(0,0,0,0.2);
+  box-shadow: 2px 4px 8px 2px rgba(0,0,0,0.2);
+}
+
+#welcome img
+{
+  height: 200%;
+  width: 200px;
+}
+
+#welcome *
+{
+  display: block;
+  margin: 4px auto;
+}
+
+#chat
+{
+  width: 700px;
+  height: 500px;
+  padding: 20px;
+}
+
+#messageBox
+{
+  height: 460px;
+  padding: 6px;
+  background-color: #FFFFFF;
+  margin: auto;
+  border: solid 1px #000000;
+  overflow: scroll;
+}
+
+#messageInput
+{
+  width: 625px;
+}
+
+.sendBar
+{
+  width: 100%;
+  padding: 10px 0;
+}
+
+input
+{
+  outline: none;
+  height: 16px;
+}
+
+div input[type="text"]
+{
+  text-align: left;
+  border: solid 1px #000000;
+}
+
+input[type="submit"]
+{
+  width: 65px;
+  height: 25px;
+  border-radius: 5px;
+  background-color: #CCCCCC;
+  color: #0D0D0D;
+}
+
+input[type="submit"]:hover
+{
+  background-color: #D9D9D9;
+}
+
+.messageComponent div
+{
+  display: inline-block;
+  padding-right: 4px;
+}
+
+.screenName
+{
+  font-family: "georgia";
+  font-weight: bold;
+}
+
+.sent
+{
+  color: #FF1E1E;
+}
+
+.signon,
+.signoff,
+.received
+{
+  color: #1C1CFF;
+}
