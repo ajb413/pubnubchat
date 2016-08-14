@@ -3,6 +3,7 @@
 
   <head>
     <title>PubNub Chat</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="style.css" />
     <script src="https://cdn.pubnub.com/pubnub-dev.js"></script>
     <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
@@ -11,17 +12,17 @@
 
   <body>
 
-    <div id="welcome" class="modal">
+    <div id="welcome" class="modal welcome">
       <img src="assets/images/pn.png" />
       <p>ScreenName:</p>
       <input id="username" type="text" maxlength="50" />
       <input id="start" type="submit" value="Sign On" />
     </div>
 
-    <div id="chat" class="modal">
-      <div id="messageBox"></div>
+    <div id="chat" class="modal chat">
+      <div id="messageBox" class="messageBox"></div>
       <div class="sendBar">
-        <input id="messageInput" type="text" maxlength="1024" />
+        <input id="messageInput" class="messageInput" type="text" maxlength="1024" />
         <input id="submit" type="submit" value="Send" /></div>
       </div>
   </body>

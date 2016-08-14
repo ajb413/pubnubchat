@@ -1,44 +1,44 @@
-#welcome
+.welcome
 {
+  width: 200px;
+  color: #443F5E;
+  text-align: center;
   font-family: arial;
   font-style: italic;
   font-weight: bold;
-  color: #443F5E;
-  width: 200px;
-  text-align: center;
 }
 
-.modal
+.welcome img
 {
-  border: solid 1px #000000;
-  background-color: #EBE9D8;
-  padding: 20px;
-  margin: auto;
-  -webkit-box-shadow: 2px 4px 8px 2px rgba(0,0,0,0.2);
-  -moz-box-shadow: 2px 4px 8px 2px rgba(0,0,0,0.2);
-  box-shadow: 2px 4px 8px 2px rgba(0,0,0,0.2);
-}
-
-#welcome img
-{
-  height: 200%;
+  height: 200px;
   width: 200px;
 }
 
-#welcome *
+.welcome *
 {
   display: block;
   margin: 4px auto;
 }
 
-#chat
+.modal
+{
+  -webkit-box-shadow: 2px 4px 8px 2px rgba(0,0,0,0.2);
+  -moz-box-shadow: 2px 4px 8px 2px rgba(0,0,0,0.2);
+  box-shadow: 2px 4px 8px 2px rgba(0,0,0,0.2);
+  padding: 20px;
+  border: solid 1px #000000;
+  margin: auto;
+  background-color: #EBE9D8;
+}
+
+.chat
 {
   width: 700px;
   height: 500px;
   padding: 20px;
 }
 
-#messageBox
+.messageBox
 {
   height: 460px;
   padding: 6px;
@@ -48,9 +48,9 @@
   overflow: scroll;
 }
 
-#messageInput
+.messageInput
 {
-  width: 625px;
+  width: 620px;
 }
 
 .sendBar
@@ -65,7 +65,7 @@ input
   height: 16px;
 }
 
-div input[type="text"]
+input[type="text"]
 {
   text-align: left;
   border: solid 1px #000000;
@@ -89,6 +89,7 @@ input[type="submit"]:hover
 {
   display: inline-block;
   padding-right: 4px;
+  word-break: break-all;
 }
 
 .screenName

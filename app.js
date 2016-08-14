@@ -7,6 +7,8 @@ $(function ()
   var startButton = $('#start');
   var chatModal = $('#chat');
   var messageBox = $('#messageBox');
+  var messageInput = $('#messageInput');
+  var submitButton = $('#submit');
   var sounds = {
     signon: $('#signon').get(0),
     signoff: $('#signoff').get(0),
@@ -14,35 +16,37 @@ $(function ()
     received: $('#received').get(0)
   };
 
-  //hide chat until username is selected
-  chatModal.hide()
+  //hide chat until username is entered
+  chatModal.hide();
 
   //User enters a name
   startButton.on("click", initialize);
-  username.keypress(function(e)
+  username.on("keypress", function(e)
   {
-    if (e.which === 13)
+    if (e.which === 13) //enter key
     {
       e.preventDefault();
       initialize();
     }
   });
-
-  var messageInput = $('#messageInput');
-  var submitButton = $('#submit');
-
+  
   //initialize the pubnub instance and chat after username is selected
   function initialize ()
   {
-    //collect the username
-    username = username.val();
+    //disallow blank user names
+    if (!username.val())
+    {
+      return;
+    }
+    else
+    {
+      username = username.val();
+    }
 
-    //remove the welcome modal
     welcomeModal.remove();
-
-    //show the chat
     chatModal.show();
 
+    //make an id so the app can differentiate who published a message
     clientId = PUBNUB.uuid();
     //intialize pubnub
     PUBNUB_demo = PUBNUB.init({
@@ -55,21 +59,20 @@ $(function ()
     PUBNUB_demo.subscribe({
       channel: 'msgappdemo',
       message: messageReceived,
-      connect: function ()
-      {
-        submitMessage('signon');
-      }
+      connect: function(){ submitMessage('signon'); },
+      disconnect: function(){ submitMessage('signoff'); }
     });
 
-    //send a sign off message on unload
-    $(window).on("beforeunload",function ()
+    //send a sign off message before leaving
+    $(window).on("beforeunload", function ()
     {
       submitMessage('signoff');
     });
 
     //get message from the past 5 minutes (max 100 messages)
     var now = new Date().getTime() * 10000; //pubnub times are in 10 millionth of seconds
-    var fiveMinutesAgo = now - 10000 * 300000; //5 minutes in milliseconds to pubnub time
+    var fiveMinutesAgo = now - 300000 * 10000; //5 min in milliseconds, *10k to convert to pubnub time
+    //pubnub history
     PUBNUB_demo.history({
       channel: 'msgappdemo',
       start: fiveMinutesAgo,
@@ -81,9 +84,9 @@ $(function ()
     {
       submitMessage('sent');
     });
-    messageInput.keypress(function(e)
+    messageInput.on("keypress", function(e)
     {
-      if (e.which === 13)
+      if (e.which === 13) //enter key
       {
         e.preventDefault();
         submitMessage('sent');
@@ -93,15 +96,14 @@ $(function ()
 
   function messageReceived (message)
   {
-    //change your
+    //if the message is not from this client, change it to recieved
     if (message.uuid !== clientId && message.type === 'sent')
     {
       message.type = 'received';
     }
 
-    //create the HTML that represents the message on the screen
+    //create the HTML that represents the message
     var messageComponent = createMessageComponent(message);
-
     //add the new message to the chat modal
     messageBox.append(messageComponent);
     //scroll the div down as messages are added
@@ -116,15 +118,16 @@ $(function ()
       "text": messageInput.val(),
       "type": type,
       "uuid": clientId
-    }
-
-    messageInput.val("")
+    };
 
     //pubnub publish
     PUBNUB_demo.publish({
       channel: 'msgappdemo',
       message: newMessage
     });
+
+    //clear the textbox
+    messageInput.val("");
   }
 
   function createMessageComponent (message)
@@ -159,8 +162,11 @@ $(function ()
       screenNameComponent.get(0).innerHTML += "signed off at " + currentTime;
     }
 
+    //reset and play the sound for this message type
+    sounds[message.type].currentTime = 0;
     sounds[message.type].play();
 
+    //put together the HTML components
     messageComponent
     .append(screenNameComponent)
     .append(messageTextComponent);
@@ -170,7 +176,7 @@ $(function ()
 
   function writeMessageHistory (historyResponse)
   {
-    for (var i=0; i<historyResponse[0].length; i++)
+    for (var i = 0; i < historyResponse[0].length; i++)
     {
       messageReceived(historyResponse[0][i]);
     }
