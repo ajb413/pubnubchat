@@ -56,8 +56,12 @@ $(function ()
     PUBNUB_demo.subscribe({
       channel: 'msgappdemo',
       message: messageReceived,
-      connect: function(){ submitMessage('signon'); },
-      disconnect: function(){ submitMessage('signoff'); }
+      connect: function () {
+        submitMessage('signon');
+      },
+      disconnect: function() {
+        submitMessage('signoff');
+      }
     });
 
     //get messages from the past 5 minutes (max 100 messages)
@@ -86,7 +90,7 @@ $(function ()
     {
       submitMessage('sent');
     });
-    
+
     messageInput.on("keypress", function(e)
     {
       e.which === 13 ? submitMessage('sent') : null; //enter key
