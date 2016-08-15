@@ -1,7 +1,6 @@
 $(function ()
 {
-  var PUBNUB_demo;
-  var clientId;
+  var PUBNUB_demo, clientId;
   var welcomeModal = $('#welcome');
   var username = $('#username');
   var startButton = $('#start');
@@ -23,31 +22,29 @@ $(function ()
   startButton.on("click", initialize);
   username.on("keypress", function(e)
   {
-    if (e.which === 13) //enter key
-    {
-      e.preventDefault();
-      initialize();
-    }
+    e.which === 13 ? initialize() : null; //enter key
   });
-  
+
   //initialize the pubnub instance and chat after username is selected
   function initialize ()
   {
     //disallow blank user names
-    if (!username.val())
-    {
-      return;
-    }
-    else
-    {
-      username = username.val();
-    }
+    if (!username.val()) return;
+    username = username.val();
 
+    //display chat ui
     welcomeModal.remove();
     chatModal.show();
 
+    startPubNub();
+    bindUIEvents();
+  }
+
+  function startPubNub ()
+  {
     //make an id so the app can differentiate who published a message
     clientId = PUBNUB.uuid();
+
     //intialize pubnub
     PUBNUB_demo = PUBNUB.init({
       publish_key: 'pub-c-648cb7fb-8634-4fb4-a629-474b725d401b',
@@ -63,34 +60,36 @@ $(function ()
       disconnect: function(){ submitMessage('signoff'); }
     });
 
+    //get messages from the past 5 minutes (max 100 messages)
+    //milliseconds * 10000 to convert to pubnub time
+    var fiveMinutesAgo = new Date().getTime()*10000 - 3000000000; 
+    
+    //pubnub history
+    PUBNUB_demo.history({
+      channel: 'msgappdemo',
+      end: fiveMinutesAgo,
+      callback: function (history) {
+        writeMessageHistory(history[0]);
+      }
+    });
+  }
+
+  function bindUIEvents ()
+  {
     //send a sign off message before leaving
     $(window).on("beforeunload", function ()
     {
       submitMessage('signoff');
     });
 
-    //get message from the past 5 minutes (max 100 messages)
-    var now = new Date().getTime() * 10000; //pubnub times are in 10 millionth of seconds
-    var fiveMinutesAgo = now - 300000 * 10000; //5 min in milliseconds, *10k to convert to pubnub time
-    //pubnub history
-    PUBNUB_demo.history({
-      channel: 'msgappdemo',
-      start: fiveMinutesAgo,
-      end: now,
-      callback: writeMessageHistory
-    });
-
     submitButton.on("click", function ()
     {
       submitMessage('sent');
     });
+    
     messageInput.on("keypress", function(e)
     {
-      if (e.which === 13) //enter key
-      {
-        e.preventDefault();
-        submitMessage('sent');
-      }
+      e.which === 13 ? submitMessage('sent') : null; //enter key
     });
   }
 
@@ -168,17 +167,17 @@ $(function ()
 
     //put together the HTML components
     messageComponent
-    .append(screenNameComponent)
-    .append(messageTextComponent);
+      .append(screenNameComponent)
+      .append(messageTextComponent);
 
     return messageComponent;
   }
 
   function writeMessageHistory (historyResponse)
   {
-    for (var i = 0; i < historyResponse[0].length; i++)
+    historyResponse.forEach(function(messageObject)
     {
-      messageReceived(historyResponse[0][i]);
-    }
+      messageReceived(messageObject);
+    });
   }
 });
