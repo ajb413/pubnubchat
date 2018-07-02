@@ -54,14 +54,17 @@ $(function ()
 
     //pubnub subscribe
     PUBNUB_demo.subscribe({
-      channel: 'adamb_msgappdemo',
-      message: messageReceived,
-      connect: function () {
-        submitMessage('signon');
-      },
-      disconnect: function() {
-        submitMessage('signoff');
-      }
+      channel: 'adamb_msgappdemo'
+    });
+    
+    // add events
+    PUBNUB_demo.addListener({
+        status: function(statusEvent) {
+            if (statusEvent.category === "PNConnectedCategory") {
+                submitMessage('signon');
+            }
+        },
+        message: messageReceived
     });
 
     //get messages from the past 5 minutes (max 100 messages)
@@ -71,10 +74,10 @@ $(function ()
     //pubnub history
     PUBNUB_demo.history({
       channel: 'adamb_msgappdemo',
-      end: fiveMinutesAgo,
-      callback: function (history) {
-        writeMessageHistory(history[0]);
-      }
+      end: fiveMinutesAgo
+    },
+    function (status, history) {
+      writeMessageHistory(history[0]);
     });
   }
 
