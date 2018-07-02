@@ -43,10 +43,10 @@ $(function ()
   function startPubNub ()
   {
     //make an id so the app can differentiate who published a message
-    clientId = PUBNUB.uuid();
+    clientId = PubNub.generateUUID();
 
     //intialize pubnub
-    PUBNUB_demo = PUBNUB.init({
+    PUBNUB_demo = new PubNub({
       publish_key: 'pub-c-648cb7fb-8634-4fb4-a629-474b725d401b',
       subscribe_key: 'sub-c-fa9f5a00-5f64-11e6-bca9-0619f8945a4f',
       uuid: clientId
