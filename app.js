@@ -47,14 +47,14 @@ $(function ()
 
     //intialize pubnub
     PUBNUB_demo = new PubNub({
-      publish_key: 'pub-c-648cb7fb-8634-4fb4-a629-474b725d401b',
-      subscribe_key: 'sub-c-fa9f5a00-5f64-11e6-bca9-0619f8945a4f',
+      publish_key: 'demo',
+      subscribe_key: 'demo',
       uuid: clientId
     });
 
     //pubnub subscribe
     PUBNUB_demo.subscribe({
-      channel: 'msgappdemo',
+      channel: 'adamb_msgappdemo',
       message: messageReceived,
       connect: function () {
         submitMessage('signon');
@@ -70,7 +70,7 @@ $(function ()
     
     //pubnub history
     PUBNUB_demo.history({
-      channel: 'msgappdemo',
+      channel: 'adamb_msgappdemo',
       end: fiveMinutesAgo,
       callback: function (history) {
         writeMessageHistory(history[0]);
@@ -125,7 +125,7 @@ $(function ()
 
     //pubnub publish
     PUBNUB_demo.publish({
-      channel: 'msgappdemo',
+      channel: 'adamb_msgappdemo',
       message: newMessage
     });
 
