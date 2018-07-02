@@ -47,8 +47,8 @@ $(function ()
 
     //intialize pubnub
     PUBNUB_demo = new PubNub({
-      publish_key: 'demo',
-      subscribe_key: 'demo',
+      publishKey: 'demo',
+      subscribeKey: 'demo',
       uuid: clientId
     });
 
