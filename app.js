@@ -180,7 +180,7 @@ $(function ()
     return messageComponent;
   }
 
-  function writeMessageHistory (historyResponse)
+  function writeMessageHistory (historyResponse=[])
   {
     historyResponse.forEach(function(messageObject)
     {
